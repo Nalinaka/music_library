@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Gallery from './components/Gallery'
 import SearchBar from './components/SearchBar'
 import AlbumView from './components/AlbumView'
 import ArtistView from './components/ArtistView'
+import { DataContext } from './context/DataContext'
 
-function App(Fragment) {
+function App() {
     let [search, setSearch] = useState('')
     let [message, setMessage] = useState('Search for Music!')
     let [data, setData] = useState([])
@@ -30,24 +31,27 @@ function App(Fragment) {
     
     const handleSearch = (e, term) => {
         e.preventDefault()
+        console.log('Term we r search!!', term)
         setSearch(term)
     }
-
+    console.log('Data state in app.js', data)
     return (
         <div>
         {message}
+        <DataContext.Provider value={data}>
             <Router>
                 <Routes>
                     <Route path="/" element={
-                        <Fragment>
+                        <React.Fragment>
                             <SearchBar handleSearch = {handleSearch}/>
                             <Gallery data={data} />
-                        </Fragment>
+                        </React.Fragment>
                     } />
                     <Route path="/album/:id" element={<AlbumView />} />
                     <Route path="/artist/:id" element={<ArtistView />} />
                 </Routes>
             </Router>
+            </DataContext.Provider>
         </div>
     )
     }

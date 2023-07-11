@@ -15,7 +15,7 @@ function GalleryItem(props){
 
 const detailView = (props) => {
     return (
-        <div style={detailStyle}>
+        <div>
             <h2>{props.item.trackName}</h2>
             <h3>
                 <Link to={`/artist/${props.item.artistId}`}>
